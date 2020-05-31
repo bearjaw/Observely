@@ -52,4 +52,3 @@ Now we can observe our counter simply by accessing the wrapper and calling the `
 - [] Thread safety
 - [] Add possibilty to provide a queue to receive the updates from
 - [] Further improvements along the road
-
