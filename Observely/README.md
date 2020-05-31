@@ -1,8 +1,8 @@
-# Observely
+# 📦 Observely
 
 A simple property wrapper that offers observing a value over time.
 
-## Disclaimer
+## ⚠️ Disclaimer
 
 This is just me playing around and this should probably not be used in production.
 
@@ -47,4 +47,8 @@ class Counter {
 
 Now we can observe our counter simply by accessing the wrapper and calling the `observe(observer:, option:, onChange:)`  function. The Counter wraps this call in it's own function `start(onChange:)`.
 
+## 🚀 Further work 
 
+- [] Thread safety
+- [] Add possibilty to provide a queue to receive the updates from
+- [] Further improvements along the road
