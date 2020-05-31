@@ -6,6 +6,17 @@ A simple property wrapper that offers observing a value over time.
 
 This is just me playing around and this should probably not be used in production.
 
+## Usage
+
+Add this library as a SwiftPM dependency:
+
+```swift
+
+dependencies: [
+    .package(url: "https://github.com/bearjaw/Observely", .branch("master")),
+]
+
+```
 ## Getting started
 
 Consider the following counter class that can increment and decrement an `Int` by 1. 
