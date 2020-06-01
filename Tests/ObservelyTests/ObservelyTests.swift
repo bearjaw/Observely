@@ -131,6 +131,38 @@ final class ObservelyTests: XCTestCase {
         wait(for: [expectation], timeout: 0)
     }
 
+    func testSignal_call_signal_immediately() {
+        let expectation = XCTestExpectation(description: "Executes with values initially")
+
+        _sut.observe(self, .new) { value in
+            guard value?.isEmpty == true else {
+                return XCTFail("Failed. SUT should be empty but has \(value?.count ?? 0) value(s)")
+            }
+            expectation.fulfill()
+        }
+
+        _sut.signal()
+
+        wait(for: [expectation], timeout: 0)
+    }
+
+    func testSignal_call_signal_afterWork() {
+        let expectation = XCTestExpectation(description: "Executes with values initially")
+
+        _sut.observe(self, .new) { value in
+            guard value?.isEmpty == true else {
+                return XCTFail("Failed. SUT should be empty but has \(value?.count ?? 0) value(s)")
+            }
+            expectation.fulfill()
+        }
+
+        _sut.signal {
+            sleep(1)
+        }
+
+        wait(for: [expectation], timeout: 1)
+    }
+
     static var allTests = [
         ("testObserve_adds_an_observer", testObserve_adds_an_observer,
          "testObserve_observe_initial_value", testObserve_observe_initial_value,
@@ -140,7 +172,9 @@ final class ObservelyTests: XCTestCase {
          "testRemoveAllObservers_removes_all_observers", testRemoveAllObservers_removes_all_observers,
          "testIncrement_mutability", testIncrement_mutability,
          "testDecrement_mutability", testDecrement_mutability,
-         "testStart_observing", testStart_observing
+         "testStart_observing", testStart_observing,
+         "testSignal_call_signal_immediately", testSignal_call_signal_immediately,
+         "testSignal_call_signal_afterWork", testSignal_call_signal_afterWork
          )
     ]
 }
@@ -161,7 +195,7 @@ private extension ObservelyTests {
 
 class CounterMock {
 
-    @Observable private(set) var counter: Int = 0
+    @Observable private(set) var counter = 0
 
     func start(onChange: @escaping (Int) -> Void) {
         _counter.observe(self) { value in
