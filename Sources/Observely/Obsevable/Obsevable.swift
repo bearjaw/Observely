@@ -46,6 +46,14 @@ public struct Observable<Value> {
 
     // MARK: - Observe a value over time
 
+    /// Observe the wrapped an get value changes. Remember to remove
+    /// an observer once observations are no longer needed.
+    ///
+    /// - Parameters:
+    ///   - observer: an observer object
+    ///   - option: provide an option whether only to receive new values
+    ///   or also intial value
+    ///   - onChange: the closure to being called on value change
     public mutating func observe<T: AnyObject>(_ observer: T,
                                  _ option: Option = .inital,
                                  _ onChange: @escaping (Value?) -> Void) {
@@ -76,7 +84,13 @@ public struct Observable<Value> {
 
     // MARK: - Signal
 
+    /// Emit a signal to all observers with the current value.
+    /// Optionally provide a closure to perform some work first.
+    ///
+    /// - Parameter after: An optional closure to be used to perform
+    /// work before signalling all observers
     public func signal(after: (() -> Void)? = nil) {
+        after?()
         triggerCallbacksIfResolved()
     }
 
