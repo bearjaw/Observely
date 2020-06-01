@@ -20,7 +20,7 @@ public struct Observable<Value> {
 
     private var value: Value
 
-    private var callbacks: [String: (Value?) -> Void] = [:]
+    private var callbacks: [String: (Value) -> Void] = [:]
 
     public var observers: [Any] {
         Array(callbacks.keys)
@@ -56,7 +56,7 @@ public struct Observable<Value> {
     ///   - onChange: the closure to being called on value change
     public mutating func observe<T: AnyObject>(_ observer: T,
                                  _ option: Option = .inital,
-                                 _ onChange: @escaping (Value?) -> Void) {
+                                 _ onChange: @escaping (Value) -> Void) {
         let key = "\(type(of: observer.self))"
         callbacks[key] = onChange
         switch option {

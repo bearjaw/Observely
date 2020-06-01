@@ -25,7 +25,7 @@ Consider the following counter class that can increment and decrement an `Int` b
 
 class Counter {
 
-    @Observable private(set) var counter: Int = 0
+    @Observable private(set) var counter = 0
     
     // MARK: - Basic functionality
     
@@ -37,16 +37,12 @@ class Counter {
          counter -= 1
      }
      
-     // MARK: - Observe and react to changes
+    // MARK: - Observe and react to changes
 
     func start(onChange: @escaping (Int) -> Void) {
         _counter.observe(self) { value in
-            if let value = value {
-                os_log(.debug, "Step: %@", "\(value)")
-            } else {
-                os_log(.debug, "I'm empty.")
-            }
-            onChange(value ?? 0)
+            os_log(.debug, "Step: %@", "\(value)")
+            onChange(value)
         }
     }
 

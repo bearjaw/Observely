@@ -199,12 +199,8 @@ class CounterMock {
 
     func start(onChange: @escaping (Int) -> Void) {
         _counter.observe(self) { value in
-            if let value = value {
-                os_log(.debug, "Step: %@", "\(value)")
-            } else {
-                os_log(.debug, "I'm empty.")
-            }
-            onChange(value ?? 0)
+            os_log(.debug, "Step: %@", "\(value)")
+            onChange(value)
         }
     }
 
